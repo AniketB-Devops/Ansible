@@ -1,0 +1,13 @@
+- hosts: web
+  become: true
+  tasks:
+    - name: crate dir
+      file:
+        path: ./vw-dir2
+        state: directory 
+      register: aniket
+
+    - name: print
+      debug:
+        msg: directory is created
+      when: aniket.changed

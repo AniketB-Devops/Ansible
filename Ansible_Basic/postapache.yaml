@@ -1,0 +1,9 @@
+- name: update default page
+  template: 
+    src: index.html
+    dest: /var/www/html
+  register: copy_result
+
+- name: check the value
+  debug:
+    msg: "{{ copy_result }}"

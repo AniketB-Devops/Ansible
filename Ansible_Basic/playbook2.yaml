@@ -1,0 +1,20 @@
+- hosts: all
+  become: true
+  tasks:
+
+
+    - name: check apache install status
+      command: systemctl status apache2
+      register: apache_status
+    
+    - name: print status
+      debug: 
+        msg: "{{apache_status.stdout}}"
+
+    - name: update default page
+      template: src=index.html dest=/var/www/html
+      register: copy_result
+    
+    - name: check the value
+      debug:
+        var: copy_result

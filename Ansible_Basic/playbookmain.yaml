@@ -1,0 +1,14 @@
+- hosts: all
+  become: true
+  pre_tasks: 
+      - name: pre requisites
+        ansible.builtin.import_tasks: pretask.yaml    
+      - name: pre apache
+        ansible.builtin.import_tasks: pretaskapache.yaml
+
+
+  post_tasks:
+      - name: postapache check
+        ansible.builtin.import_tasks: postapache.yaml
+
+          

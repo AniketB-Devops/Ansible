@@ -1,0 +1,10 @@
+- name: create dir
+  file:
+    path: ./vw-dir2
+    state: directory
+  register: aniket
+
+- name: print
+  debug:
+    msg: "Directory is created"
+  when: aniket.changed

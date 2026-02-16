@@ -1,0 +1,14 @@
+- name: install apache
+  apt: 
+    name: 
+      - apache2 
+    state: present
+  register: apache_status
+
+- name: check apache install status
+  command: systemctl status apache2
+  register: apache_status
+
+- name: print status
+  debug: 
+    msg: "{{apache_status.stdout}}"
