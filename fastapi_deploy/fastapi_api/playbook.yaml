@@ -1,0 +1,37 @@
+- hosts: db
+  become: true
+  gather_facts: false
+  pre_tasks:
+    - name: update_cache
+      apt:
+        update_cache: true
+  tasks:
+    - name: install required software
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+        state: latest
+    - name: create FastAPI directory on remote machine
+      file:
+        path: /opt/fastapi_app
+        state: directory
+
+    - name: copy fastapi folder to the destination
+      copy:
+        src:  fastapi_app/
+        dest: /opt/fastapi_app
+    - name: create VENV
+      command: python3 -m venv /opt/fastapi_app/venv
+      args:
+        creates: /opt/fastapi_app/venv
+    
+    - name: install fastapi in venv
+      command: /opt/fastapi_app/venv/bin/pip install fastapi uvicorn
+
+    - name: run my fastapi_app
+      shell: |
+        nohup /opt/fastapi_app/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 &
+      args:
+        chdir: /opt/fastapi_app

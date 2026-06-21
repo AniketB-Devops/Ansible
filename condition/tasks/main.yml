@@ -1,0 +1,22 @@
+- name: install apache if conditions are true
+  apt:
+    name: apache2
+    state: latest
+  when: install_apache_flag
+
+- name: combine another condition
+  debug:
+    var: ansible_facts['kernel_version']
+  when:
+    - ansible_facts['os_family']=='Debian'
+    - ansible_facts['distribution_major_version']=='24'
+
+
+- name: install only when role is found
+  command: cat /home/ubuntu/vw-user.txt
+  register: content_of_file
+
+- name: use the var to take decision
+  debug:
+    var: content_of_file.stdout
+  when: content_of_file.stdout.find('ANIKET')!= -1

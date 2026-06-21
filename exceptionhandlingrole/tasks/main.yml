@@ -1,0 +1,14 @@
+- name: copy src to destination
+  template: src=update1.html dest=/home/ubuntu
+  register: copy_result
+  ignore_errors: true
+
+- name: print message
+  debug:
+    var: copy_result
+
+- name: copy src to destination
+  template: src=newvalue.html dest=/home/ubuntu
+  failed_when:
+    - copy_result.failed == true
+    - '"Could not find or access" in copy_result.msg'

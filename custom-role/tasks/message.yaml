@@ -1,0 +1,6 @@
+- name: read and transfer message
+  copy:
+    content: "{{message}}"
+    dest: /var/www/html/index.html
+
+    

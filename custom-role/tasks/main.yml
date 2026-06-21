@@ -1,0 +1,7 @@
+- import_tasks: message.yaml
+- import_tasks: packages.yaml
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started 
